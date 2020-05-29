@@ -1,0 +1,34 @@
+---
+- name: Install Arch Base Packages
+  pacman:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - base
+    - linux
+    - linux-firmware
+    - man-db
+    - man-pages
+    - texinfo
+    - net-tools
+    - lvm2
+    - wpa_supplicant
+    - vim
+    - zstd
+    - wget
+    - curl
+    - dhcpcd
+    - git
+    - efibootmgr
+    - intel-ucode
+    - libfido2
+    - nss-pam-ldapd
+    - openldap
+    - openssh
+    - sssd
+    - sudo
+    - terminus-font
+    - nfs-utils
+    - libnfs
+    - zsh
+    - python

@@ -1,0 +1,8 @@
+---
+- name: Install base packages CentOS
+  include: "centos.yml"
+  when: ansible_facts['distribution'] == 'CentOS'
+
+- name: Install base packages Arch
+  include: "arch.yml"
+  when: ansible_facts['distribution'] == 'Archlinux'

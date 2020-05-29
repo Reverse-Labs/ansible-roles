@@ -1,0 +1,12 @@
+- name: Install base packages
+  xbps:
+    name: "{{packages}}"
+    state: present
+  vars:
+    packages:
+      - git
+      - vim
+      - curl
+      - linux5.6
+      - linux-firmware
+      - wireguard-tools
