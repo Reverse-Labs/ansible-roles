@@ -1,0 +1,43 @@
+- name: Download Convoy
+  get_url:
+    url: "https://github.com/rancher/convoy/releases/download/{{CONVOY_VERSION}}/convoy.tar.gz"
+    dest: /tmp/convoy.tar.gz
+  vars:
+    CONVOY_VERSION: v0.5.2
+
+- name: Unarchive convoy.tar.gz
+  unarchive:
+    src: "/tmp/convoy.tar.gz"
+    dest: "/tmp/"
+    remote_src: yes
+
+- name: Copy convoy binary
+  copy:
+    src: /tmp/convoy/
+    dest: /usr/local/bin/
+    remote_src: yes
+
+- name: Ensure /etc/docker/plugins
+  file:
+    path: /etc/docker/plugins
+    state: directory
+
+- name: Setup convoy socket
+  lineinfile:
+    path: /etc/docker/plugins/convoy.spec
+    state: present
+    create: yes
+    line: "unix:///var/run/convoy/convoy.sock"
+
+- name: Copy convoy.service
+  copy:
+    src: "{{role_path}}/files/convoy.service"
+    dest: "/etc/systemd/system/convoy.service"
+
+    #- name: Start Convoy
+    #systemd:
+    #name: "convoy@{{CONVOY_PATH}}"
+    #state: started
+    #enabled: yes
+    #daemon_reload: yes
+

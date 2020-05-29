@@ -1,0 +1,13 @@
+[Unit]
+Description=Convoy Daemon
+Before=docker.service
+
+[Service]
+ExecStart=/usr/local/bin/convoy daemon --drivers vfs --driver-opts vfs.path=%i --create-on-docker-mount --log /var/log/convoy.log
+Type=simple
+Restart=always
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+

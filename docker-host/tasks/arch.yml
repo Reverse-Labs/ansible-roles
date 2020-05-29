@@ -1,0 +1,10 @@
+---
+- name: Install Docker on Arch
+  pacman:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - docker
+      - docker-machine
+      - docker-compose
+      

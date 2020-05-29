@@ -1,0 +1,40 @@
+---
+- name: Remove default docker packages
+  yum:
+    name: "{{ packages }}"
+    state: absent
+  vars:
+    packages:
+      - docker-client
+      - docker-client-latest
+      - docker-common
+      - docker-latest
+      - docker-latest-logrotate
+      - docker-logrotate
+      - docker-engine
+      - docker-compose
+
+- name: Add docker-ce repo
+  shell: yum-config-manager --add-repo {{DOCKER_REPO}}
+  vars:
+    DOCKER_REPO: "https://download.docker.com/linux/centos/docker-ce.repo"
+
+- name: Install Epel Release
+  yum:
+    name: epel-release
+    state: present
+
+
+- name: Install docker-ce
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose
+
+- name: Enable and Start docker
+  systemd: name=docker state=started enabled=yes

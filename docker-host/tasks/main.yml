@@ -1,0 +1,12 @@
+---
+
+- name: CentOS docker
+  include: "centos.yml"
+  when: ansible_facts['distribution'] == 'CentOS'
+
+- name: Arch docker
+  include: "arch.yml"
+  when: ansible_facts['distribution'] == 'Archlinux'
+
+- name: Install convoy storage driver
+  include: "storage.yml"
