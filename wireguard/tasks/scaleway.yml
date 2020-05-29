@@ -1,0 +1,10 @@
+- name: Copy Scaleway kernel-tools script
+  copy:
+    src: "{{role_path}}/files/scaleway-kernel-tools.sh"
+    dest: /tmp/kernel-tools.sh
+    mode: 0740
+  when: CLOUD_PROVIDER is defined and CLOUD_PROVIDER == 'SCW' and BM is defined
+
+- name: Run scaleway kernel-tools script
+  shell: /tmp/kernel-tools.sh
+  when: CLOUD_PROVIDER is defined and CLOUD_PROVIDER == 'SCW' and BM is defined

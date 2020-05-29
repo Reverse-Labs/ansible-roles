@@ -1,0 +1,24 @@
+- name: Install openssl-devel (CentOS)
+  yum:
+    name: "openssl-devel"
+  when: ansible_facts['distribution'] == 'CentOS'
+
+- name: Install yum-plugin-elrepo (CentOS)
+  yum:
+    name: "yum-plugin-elrepo"
+  when: ansible_facts['distribution'] == 'CentOS'
+
+- name: jdoss-wireguard-epel-7
+  shell: curl -o /etc/yum.repos.d/jdoss-wireguard-epel-7.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
+  when: ansible_facts['distribution'] == 'CentOS'
+
+- name: Install wireguard
+  yum:
+    name: "{{ packages }}"
+  when: ansible_facts['distribution'] == 'CentOS'
+  vars:
+    packages:
+      - wireguard-tools
+      - kmod-wireguard
+      - wireguard-dkms
+

@@ -1,0 +1,19 @@
+---
+- name: mkdir /etc/wireguard
+  shell: mkdir -p /etc/wireguard
+
+- name: CentOS 
+  include: "centos.yml"
+  when: ansible_facts['distribution'] == 'CentOS'
+
+- name: Copy Scaleway kernel-tools script
+  include: "scaleway.yml"
+  when: CLOUD_PROVIDER is defined and CLOUD_PROVIDER == 'SCW' and BM is defined
+
+- name: Install wireguard
+  pacman:
+    name: "{{ packages }}"
+  when: ansible_facts['distribution'] == 'Archlinux'
+  vars:
+    packages:
+      - wireguard-tools     
